@@ -13,6 +13,22 @@ for (tree in DynoTrees)
         children : treeObj.nodes,
         contextMenus:treeObj.menus,
         defaultDropCallback:treeObj.defaultDropCallback,
+        onActivate: function(node) {
+
+            if (node.contextInit)
+            {
+                return false;
+            }
+
+            if (node.data.nodeOnActiveCallback)
+            {
+                node.data.nodeOnActiveCallback();
+            }
+            else if( node.data.href )
+            {
+                window.open(node.data.href, node.data.target);
+            }
+        },
         dnd: {
             preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
             autoExpandMS:300,
@@ -78,7 +94,9 @@ $.contextMenu({
         // e is the original contextmenu event, containing e.pageX and e.pageY (amongst other data)
         var node = $.ui.dynatree.getNode($trigger);
 
+        node.contextInit = true;
         node.activate();
+        node.contextInit = false;
 
         menuId = node.data.contextMenuId;
 

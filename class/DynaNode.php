@@ -2,6 +2,7 @@
 
 /**
  * @property $nodeDropCallback string @see DynaTree::$defaultDropCallback
+ * @property $nodeOnActiveCallback
  */
 class DynaNode extends CComponent
 {
@@ -31,9 +32,14 @@ class DynaNode extends CComponent
     public $draggable = false;
 
     /**
-     * @var bool wheteher we can drop inside the node
+     * @var bool whether we can drop inside the node
      */
     public $dropable = false;
+
+    /**
+     * @var string node link
+     */
+    public $href = false;
 
     /**
      * @var string id of the contextMenu opened with the right click on node
@@ -50,9 +56,24 @@ class DynaNode extends CComponent
         $this->title = $title;
     }
 
+    /**
+     * js function (node, sourceNode, hitMode, ui, draggable)
+     * @param $string
+     * @return CJavaScriptExpression
+     */
     public function setNodeDropCallback($string)
     {
         return $this->nodeDropCallback = new CJavaScriptExpression($string);
+    }
+
+    /**
+     * js function (node)
+     * @param $string
+     * @return CJavaScriptExpression
+     */
+    public function setNodeOnActiveCallback($string)
+    {
+        return $this->nodeOnActiveCallback = new CJavaScriptExpression($string);
     }
 
 
